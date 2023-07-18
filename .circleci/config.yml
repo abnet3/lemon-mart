@@ -21,7 +21,7 @@ jobs:
           name: Display Node.js version
           command: node -v
       - run: npm run build --configuration:production
-      - run: npm run test --watch=false --code-coverage"
+      - run: npm run test:coverage
       # - run: ng e2e
       - run:
           name: Tar & Gzip compiled app
