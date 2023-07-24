@@ -1,14 +1,22 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
+import { combineLatest, filter, tap } from 'rxjs'
+
+import { AuthService } from '../auth/auth.service'
 
 @Component({
   selector: 'app-home',
   template: `
-    <div fxLayout="column" fxLayoutAlign="center center">
-      <span class="mat-headline-2">Hello, Limoncu!</span>
-      <button mat-raised-button color="primary" routerLink="/manager">
-        Login as Manager
-      </button>
+    <div *ngIf="(authService.authStatus$ | async)?.isAuthenticated; else doLogin">
+      <div class="mat-display-4">This is LemonMart! The place where</div>
+      <div class="mat-display-4">
+        You get a lemon, you get a lemon, you get a lemon...
+      </div>
+      <div class="mat-display-4">Everybody gets a lemon.</div>
     </div>
+    <ng-template #doLogin>
+      <app-login></app-login>
+    </ng-template>
   `,
   styles: [
     `
@@ -18,4 +26,9 @@ import { Component } from '@angular/core'
     `,
   ],
 })
-export class HomeComponent {}
+export class HomeComponent implements OnInit {
+  displayLogin = true
+  constructor(public authService: AuthService) {}
+
+  ngOnInit(): void {}
+}
